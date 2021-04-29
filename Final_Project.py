@@ -350,7 +350,6 @@ def plot_bar_chart(country_to_check, viz_choice):
     df_country_to_check = df[df.country == country_to_check]
     df_other = df[df.country != country_to_check]
     if viz_choice == "1":
-
         bin_range = 10
         plt.hist([df_country_to_check.price, df_other.price],range=[0, 50], bins = bin_range, label=['Selected country: {country_to_check}', 'Other Countries'])
         plt.legend(loc='upper left')
@@ -485,12 +484,12 @@ if __name__ == "__main__":
                 cache_dict_w_new_country = make_request_with_cache(baseurl,params)
                 create_sql_database_tables()
                 add_data_to_database(make_request_with_cache(baseurl,params))
-                viz_choice = input("\n\nSelect choice for visualization for selected country from sample of 100 listings:\n 1 - selected country item price distribution \n 2 - percentage of handmade vs. collectively made vs. made by someone else \n 3 - percentage of vintage items \n 4 - number of sellers \n or type 'exit' to exit program: ")
+                viz_choice = input("\n\nSelect choice for visualization for selected country from sample of 100 listings:\n1 - selected country price range \n2 - distribution of currency codes across the world for etsy \n3 - percentage of handmade vs. collectively made vs. made by someone else \n4 - number of sellers in selected country and world \nor type 'exit' to exit program: ")
                 while True:
                     if viz_choice == "exit":
                             exit()
                     elif viz_choice not in ["1","2","3","4"]:
-                        viz_choice = input("\n\ninvalid choice! Must be selectrd from:\n1 - selected country price range \n2 - percentage of handmade vs. collectively made vs. made by someone else \n3 - percentage of vintage items \n4 - number of sellers \nor type 'exit' to exit program: ")
+                        viz_choice = input("\n\ninvalid choice! Must be selectrd from:\n1 - selected country price range \n2 - distribution of currency codes across the world for etsy \n3 - percentage of handmade vs. collectively made vs. made by someone else \n4 - number of sellers in selected country and world \nor type 'exit' to exit program: ")
                         if viz_choice == "exit":
                             exit()
                         elif viz_choice not in ["1","2","3","4"]:
@@ -516,12 +515,12 @@ if __name__ == "__main__":
                     create_sql_database_tables()
                     add_data_to_database(make_request_with_cache(baseurl,params))
                     #price, who_made, is_vintage, currency_code, country = convert_sql_to_lists()
-                    viz_choice = input("\n\nSelect choice for visualization for selected country from sample of 100 listings:\n 1 - selected country price range \n 2 - percentage of handmade vs. collectively made vs. made by someone else \n 3 - percentage of vintage items \n 4 - number of sellers \n or type 'exit' to exit program: ")
+                    viz_choice = input("\n\nSelect choice for visualization for selected country from sample of 100 listings:\n1 - selected country price range \n2 - distribution of currency codes across the world for etsy \n3 - percentage of handmade vs. collectively made vs. made by someone else \n4 - number of sellers in selected country and world \nor type 'exit' to exit program: ")
                     while True:
                         if viz_choice == "exit":
                                 exit()
                         elif viz_choice not in ["1","2","3","4"]:
-                            viz_choice = input("\n\ninvalid choice! Must be selectrd from:\n1 - selected country price range \n2 - percentage of handmade vs. collectively made vs. made by someone else \n3 - percentage of vintage items \n4 - number of sellers \nor type 'exit' to exit program: ")
+                            viz_choice = input("\n\ninvalid choice! Must be selectrd from:\n1 - selected country price range \n2 - distribution of currency codes across the world for etsy \n3 - percentage of handmade vs. collectively made vs. made by someone else \n4 - number of sellers in selected country and world \nor type 'exit' to exit program: ")
                             if viz_choice == "exit":
                                 exit()
                             elif viz_choice not in ["1","2","3","4"]:
@@ -539,12 +538,12 @@ if __name__ == "__main__":
             create_sql_database_tables()
             add_data_to_database(make_request_with_cache(baseurl,params))
             #price, who_made, is_vintage, currency_code, country = convert_sql_to_lists()
-            viz_choice = input("\n\nSelect choice for visualization for selected country from sample of 100 listings:\n1 - selected country price range \n2 - percentage of handmade vs. collectively made vs. made by someone else \n3 - percentage of vintage items \n4 - number of sellers \nor type 'exit' to exit program: ")
+            viz_choice = input("\n\nSelect choice for visualization for selected country from sample of 100 listings:\n1 - selected country price range \n2 - distribution of currency codes across the world for etsy \n3 - percentage of handmade vs. collectively made vs. made by someone else \n4 - number of sellers in selected country and world \nor type 'exit' to exit program: ")
             while True:
                 if viz_choice == "exit":
                         exit()
                 elif viz_choice not in ["1","2","3","4"]:
-                    viz_choice = input("\n\ninvalid choice! Must be selectrd from:\n1 - selected country price range \n2 - percentage of handmade vs. collectively made vs. made by someone else \n3 - percentage of vintage items \n4 - number of sellers \nor type 'exit' to exit program: ")
+                    viz_choice = input("\n\ninvalid choice! Must be selectrd from:\n1 - selected country price range \n2 - distribution of currency codes across the world for etsy \n3 - percentage of handmade vs. collectively made vs. made by someone else \n4 - number of sellers in selected country and world \nor type 'exit' to exit program: ")
                     if viz_choice == "exit":
                         exit()
                     elif viz_choice not in ["1","2","3","4"]:
