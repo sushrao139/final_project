@@ -554,10 +554,3 @@ if __name__ == "__main__":
                 else:
                     plot_bar_chart(country_to_check, viz_choice)
                 break
-
-
-    params = {"location": country_to_check,"limit":count,"sort_on":"score"}
-    cache_dict_w_new_country = make_request_with_cache(baseurl,params)
-    create_sql_database_tables()
-    add_data_to_database(make_request_with_cache(baseurl,params))
-    price, who_made, is_vintage, currency_code, country = convert_sql_to_lists()
