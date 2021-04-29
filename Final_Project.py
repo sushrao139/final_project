@@ -13,7 +13,7 @@ import secrets # file that contains your OAuth credentials
 CACHE_FILENAME = "etsy_cache.json"
 CACHE_DICT = {}
 
-client_key = secrets.ETSY_API_KEY #"m9nyb24i67vb4ibw1qoy9pua"
+client_key = secrets.ETSY_API_KEY
 
 oauth = OAuth1(client_key)
 
@@ -337,18 +337,19 @@ def plot_bar_chart(country_to_check, viz_choice):
     -------
     None
     '''
-    price, who_made, is_vintage, currency_code, country = convert_sql_to_lists()
-    list_of_available_countries, country_sellers = web_scrape_for_country_data()
+    price, who_made, is_vintage, currency_code, country = convert_sql_to_lists() #convert sql data in lists for easier plotting
+    list_of_available_countries, country_sellers = web_scrape_for_country_data() #perform web scraping to find list of available countries for Etsy search
 
-    print(country_to_check)
     import pandas as pd
     import matplotlib.pyplot as plt
-    df = pd.DataFrame({'price':price,'who_made':who_made, 'is_vintage': is_vintage, 'currency_code': currency_code, 'country': country})
-    df_seller_by_country = pd.DataFrame({'country': list_of_available_countries, 'number_of_sellers': country_sellers})
-    df_seller_by_country['country'] = df_seller_by_country['country'].str.lower()
-    print(df_seller_by_country)
-    df_country_to_check = df[df.country == country_to_check]
-    df_other = df[df.country != country_to_check]
+    df = pd.DataFrame({'price':price,'who_made':who_made, 'is_vintage': is_vintage, 'currency_code': currency_code, 'country': country}) #create dataframes from json file
+    df_seller_by_country = pd.DataFrame({'country': list_of_available_countries, 'number_of_sellers': country_sellers}) #create data frame from web scraped information
+    df_seller_by_country['country'] = df_seller_by_country['country'].str.lower() #convert country name to lower case
+    df_seller_by_country = df_seller_by_country.sort_values()
+
+    df_country_to_check = df[df.country == country_to_check] #separate selected country data
+    df_other = df[df.country != country_to_check] #separate all data except the selected country for comparison
+
     if viz_choice == "1":
         bin_range = 10
         plt.hist([df_country_to_check.price, df_other.price],range=[0, 50], bins = bin_range, label=['Selected country: {country_to_check}', 'Other Countries'])
@@ -356,7 +357,7 @@ def plot_bar_chart(country_to_check, viz_choice):
         plt.ylabel('Count')
         plt.title('Price Distribution of Etsy Listings from Different Countries')
         plt.show()
-    if viz_choice == "2":
+    elif viz_choice == "2":
         df_count_cc = df.groupby('currency_code').count()['country']
         df_count_cc = df_count_cc.reset_index()
         df_count_cc['percentage_currency'] = (df_count_cc['country'] / df_count_cc['country'].sum())*100#(df_count_cc['count'] / df_count_cc['count'].sum())*100
@@ -378,7 +379,7 @@ def plot_bar_chart(country_to_check, viz_choice):
         ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
         plt.title(f'Distribution of the currencies used by {len(df.country.unique())} countries in the database')
         plt.show()
-    if viz_choice == "3":
+    elif viz_choice == "3":
         df_count_who_made = df_country_to_check.groupby('who_made').count()['country']
         df_count_who_made = df_count_who_made.reset_index()
         df_count_who_made['percentage_handmade'] = (df_count_who_made['country'] / df_count_who_made['country'].sum())*100#(df_count_cc['count'] / df_count_cc['count'].sum())*100
@@ -399,18 +400,11 @@ def plot_bar_chart(country_to_check, viz_choice):
         ax2.pie(sizes_world, labels=labels_world, autopct='%1.1f%%', shadow=True, startangle=90)
         ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
         plt.show()
-    if viz_choice == "4":
-        # countries = df_seller_by_country.country
-        # print(countries)
-        # sellers = df_seller_by_country.number_of_sellers
+    elif viz_choice == "4":
         import plotly.express as px
         fig = px.bar(df_seller_by_country, x='country', y='number_of_sellers', title=f"Number of Sellers Per Country. \nThe Number of Sellers in {country_to_check} is {df_seller_by_country[df_seller_by_country['country'] == country_to_check]['number_of_sellers'].item()}")
         print(df_seller_by_country[df_seller_by_country['country'] == "france"]['number_of_sellers'])
         fig.show()
-        # print(sellers)
-        # fig, ax = plt.subplots()
-        # ax.bar(countries.tolist(),sellers.tolist())
-        # plt.show()
     pass
 
 def web_scrape_for_country_data():
