@@ -345,7 +345,6 @@ def plot_bar_chart(country_to_check, viz_choice):
     df = pd.DataFrame({'price':price,'who_made':who_made, 'is_vintage': is_vintage, 'currency_code': currency_code, 'country': country}) #create dataframes from json file
     df_seller_by_country = pd.DataFrame({'country': list_of_available_countries, 'number_of_sellers': country_sellers}) #create data frame from web scraped information
     df_seller_by_country['country'] = df_seller_by_country['country'].str.lower() #convert country name to lower case
-    df_seller_by_country = df_seller_by_country.sort_values()
 
     df_country_to_check = df[df.country == country_to_check] #separate selected country data
     df_other = df[df.country != country_to_check] #separate all data except the selected country for comparison
